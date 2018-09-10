@@ -1,0 +1,83 @@
+class Sentence:
+	def __init__(self):
+		self.form_list = []
+		self.lemma_list = []
+		self.pos_list = []
+		self.int_seq = []
+		self.arc_list = []
+		self.morph_list = []
+		
+# ID FORM LEMMA UPOSTAG XPOSTAG FEATS HEAD DEPREL DEPS MISC		
+# 0	 1	  2     3       4       5     6    7      8    9
+
+class Dataset:
+	def __init__(self, path):
+		self.path = path
+		self.sentences = []
+		self.get_dataset()
+
+		
+	def get_dataset(self):
+		lines = tuple(open(self.path, 'r'))
+		sent_counter = 0
+		sent = Sentence()
+		for line in lines:
+			#They used '-' char for turkish corpora instead of '.' 
+			if not (line.startswith('#') or '.' in line.split("\t")[0]):
+				if line.strip():
+					attr = line.split("\t")
+					if int(attr[0]) == 1:
+						sent.arc_list.append((-1,0))
+						sent.int_seq.append(0)
+						#sent.form_list.append("ROOT_form")
+						#sent.lemma_list.append("ROOT_lemma")
+						#sent.pos_list.append("ROOT_pos")
+						#sent.morph_list.append("ROOT_morph")
+						if attr[6] == '_':
+							sent.arc_list.append((attr[6],attr[0]))
+						else:
+							sent.arc_list.append((int(attr[6]),int(attr[0])))
+						sent.pos_list.append(attr[3])
+						sent.int_seq.append(int(attr[0]))
+						sent.form_list.append(attr[1])
+						sent.morph_list.append(attr[5])
+						sent.lemma_list.append(attr[2])
+					else:
+						if attr[6] == '_':
+							sent.arc_list.append((attr[6],attr[0]))
+						else:
+							sent.arc_list.append((int(attr[6]),int(attr[0])))
+						sent.pos_list.append(attr[3])
+						sent.int_seq.append(int(attr[0]))
+						sent.form_list.append(attr[1])
+						sent.lemma_list.append(attr[2])
+						sent.morph_list.append(attr[5])
+				else:
+					self.sentences.append(sent)
+					sent = Sentence()
+					sent_counter +=1
+				
+			if sent_counter  == 5:
+				break
+		
+class Output:
+	def __init__(self,dataset,document_name):
+		self.dataset = dataset
+		self.document_name = document_name
+		self.printing = self.print_out()
+		
+	def print_out(self):
+		for sentence in self.dataset:
+			with open(self.document_name, 'a') as file_handler:
+				for line in sentence:
+					file_handler.write(line + '\n')
+				file_handler.write('\n')
+
+		
+
+
+	
+	
+
+		
+		
