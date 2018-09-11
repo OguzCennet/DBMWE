@@ -15,9 +15,6 @@ class DataPreparation:
 		onehot_matrix = np.zeros((len(word2id), len(word2id)),  dtype = int)
 		for word, id in word2id.items():
 			onehot_matrix[id][id] = 1
-		print(len(word2id))
-		print(onehot_matrix[30])
-		print(onehot_matrix.shape)
 
 
 
