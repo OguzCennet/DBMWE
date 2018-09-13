@@ -1,6 +1,7 @@
 class Sentence:
 	def __init__(self):
 		self.form_list = []
+		self.couple_list = []
 		self.lemma_list = []
 		self.pos_list = []
 		self.int_seq = []
@@ -29,14 +30,16 @@ class Dataset:
 					if int(attr[0]) == 1:
 						sent.arc_list.append((-1,0))
 						sent.int_seq.append(0)
-						#sent.form_list.append("ROOT_form")
-						#sent.lemma_list.append("ROOT_lemma")
-						#sent.pos_list.append("ROOT_pos")
-						#sent.morph_list.append("ROOT_morph")
+						sent.form_list.append("ROOT")
+						sent.lemma_list.append("ROOT")
+						sent.pos_list.append("ROOT")
+						sent.morph_list.append("ROOT")
 						if attr[6] == '_':
 							sent.arc_list.append((attr[6],attr[0]))
+							sent.couple_list.append((attr[0],attr[1] ))
 						else:
 							sent.arc_list.append((int(attr[6]),int(attr[0])))
+							sent.couple_list.append((attr[0],attr[1] ))
 						sent.pos_list.append(attr[3])
 						sent.int_seq.append(int(attr[0]))
 						sent.form_list.append(attr[1])
@@ -45,8 +48,11 @@ class Dataset:
 					else:
 						if attr[6] == '_':
 							sent.arc_list.append((attr[6],attr[0]))
+							sent.couple_list.append((attr[0],attr[1] ))
+
 						else:
 							sent.arc_list.append((int(attr[6]),int(attr[0])))
+							sent.couple_list.append((attr[0],attr[1] ))
 						sent.pos_list.append(attr[3])
 						sent.int_seq.append(int(attr[0]))
 						sent.form_list.append(attr[1])
@@ -57,8 +63,8 @@ class Dataset:
 					sent = Sentence()
 					sent_counter +=1
 				
-			if sent_counter  == 5:
-				break
+			#if sent_counter  == 5:
+			#	break
 		
 class Output:
 	def __init__(self,dataset,document_name):
