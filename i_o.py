@@ -24,7 +24,8 @@ class Dataset:
 		sent = Sentence()
 		for line in lines:
 			#They used '-' char for turkish corpora instead of '.' 
-			if not (line.startswith('#') or '.' in line.split("\t")[0]):
+			#if not (line.startswith('#') or '.' in line.split("\t")[0]):
+			if not (line.startswith('#') or '.'  in line.split("\t")[0] or '-' in line.split("\t")[0]):
 				if line.strip():
 					attr = line.split("\t")
 					if int(attr[0]) == 1:
@@ -63,22 +64,8 @@ class Dataset:
 					sent = Sentence()
 					sent_counter +=1
 				
-			#if sent_counter  == 5:
-			#	break
-		
-class Output:
-	def __init__(self,dataset,document_name):
-		self.dataset = dataset
-		self.document_name = document_name
-		self.printing = self.print_out()
-		
-	def print_out(self):
-		for sentence in self.dataset:
-			with open(self.document_name, 'a') as file_handler:
-				for line in sentence:
-					file_handler.write(line + '\n')
-				file_handler.write('\n')
-
+			if sent_counter  == 100:
+				break
 		
 
 
