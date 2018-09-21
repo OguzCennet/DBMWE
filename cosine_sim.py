@@ -12,4 +12,4 @@ def cosine_similarities(data, embeddings):
 		for word2 in data.unique_words:
 			if word2 != word1:
 				similarity_dict[word1] = tuple((word2,cosine_distance(embeddings[word1],embeddings[word2])))
-	print(similarity_dict)
+

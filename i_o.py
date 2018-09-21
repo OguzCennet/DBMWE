@@ -43,9 +43,9 @@ class Dataset:
 							sent.couple_list.append((attr[0],attr[1] ))
 						sent.pos_list.append(attr[3])
 						sent.int_seq.append(int(attr[0]))
-						sent.form_list.append(attr[1])
+						sent.form_list.append(attr[1].lower())
 						sent.morph_list.append(attr[5])
-						sent.lemma_list.append(attr[2])
+						sent.lemma_list.append(attr[2].lower())
 					else:
 						if attr[6] == '_':
 							sent.arc_list.append((attr[6],attr[0]))
@@ -56,16 +56,16 @@ class Dataset:
 							sent.couple_list.append((attr[0],attr[1] ))
 						sent.pos_list.append(attr[3])
 						sent.int_seq.append(int(attr[0]))
-						sent.form_list.append(attr[1])
-						sent.lemma_list.append(attr[2])
+						sent.form_list.append(attr[1].lower())
+						sent.lemma_list.append(attr[2].lower())
 						sent.morph_list.append(attr[5])
 				else:
 					self.sentences.append(sent)
 					sent = Sentence()
 					sent_counter +=1
 				
-			if sent_counter  == 100:
-				break
+			#f sent_counter  == 5:
+			#	break
 		
 
 
